@@ -1,0 +1,25 @@
+
+"""
+Players Model
+"""
+type Player {
+    id: String!
+    number: Int!
+    name: String!
+    nickNames: [String!]
+}
+
+type Query {
+    players: [Player!]!
+    player(id: ID!): Player
+}
+
+type Mutation {
+    createPlayer(createPlayerInput: CreatePlayerInput): Player
+}
+
+input CreatePlayerInput {
+    number: Int!
+    name: String!
+    nickNames: [String!]
+}
