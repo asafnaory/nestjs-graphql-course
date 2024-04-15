@@ -1,32 +1,55 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePlayerInput, Player } from 'src/graphql';
-import * as crypto from 'crypto';
-
-const data: Player[] = [
-  {
-    id: '1',
-    number: 23,
-    name: 'Micheal Jordan',
-    nickNames: ['MJ', 'His Airness'],
-  },
-  {
-    id: '2',
-    number: 24,
-    name: 'Kobe Bryant',
-    nickNames: ['Black Mamba', 'Vino'],
-  },
-];
+import { CreatePlayerInput, UpdatePlayerInput } from 'src/graphql';
+import { Player } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { UserInputError } from '@nestjs/apollo';
 
 @Injectable()
 export class PlayersService {
-  findAll(): Player[] {
-    return data;
+  constructor(private readonly prismaService: PrismaService) {}
+  async findAll(): Promise<Player[]> {
+    return await this.prismaService.player.findMany();
   }
-  findOne(id: string): Player {
-    return data.find((player) => player.id === id);
+
+  async findOne(id: string): Promise<Player> {
+    return await this.prismaService.player.findUnique({ where: { id } });
   }
-  create(createPlayerInput: CreatePlayerInput): Player {
-    data.push({ ...createPlayerInput, id: crypto.randomUUID() });
-    return data[data.length - 1];
+
+  async create(createPlayerInput: CreatePlayerInput): Promise<Player> {
+    return this.prismaService.player.create({
+      data: {
+        ...createPlayerInput,
+      },
+    });
+  }
+
+  async update(
+    id: string,
+    updatePlayerInput: UpdatePlayerInput,
+  ): Promise<Player> {
+    const player = await this.prismaService.player.findUnique({
+      where: { id },
+    });
+    if (!player) {
+      throw new UserInputError(`Player with id ${id} was not found`);
+    }
+    return this.prismaService.player.update({
+      where: { id },
+      data: {
+        ...updatePlayerInput,
+      },
+    });
+  }
+
+  async remove(id: string): Promise<Player> {
+    const player = await this.prismaService.player.findUnique({
+      where: { id },
+    });
+    if (!player) {
+      throw new UserInputError(`Player with id ${id} was not found`);
+    }
+    return this.prismaService.player.delete({
+      where: { id },
+    });
   }
 }

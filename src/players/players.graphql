@@ -3,7 +3,7 @@
 Players Model
 """
 type Player {
-    id: String!
+    id: ID!
     number: Int!
     name: String!
     nickNames: [String!]
@@ -16,10 +16,18 @@ type Query {
 
 type Mutation {
     createPlayer(createPlayerInput: CreatePlayerInput): Player
+    updatePlayer(id: ID!, updatePlayerInput: UpdatePlayerInput): Player
+    deletePlayer(id: ID!): Player
 }
 
 input CreatePlayerInput {
     number: Int!
     name: String!
+    nickNames: [String!]
+}
+
+input UpdatePlayerInput {
+    number: Int
+    name: String
     nickNames: [String!]
 }

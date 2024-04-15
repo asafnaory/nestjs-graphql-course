@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { PlayersModule } from './players/players.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { PlayersModule } from './players/players.module';
       typePaths: ['./**/*.graphql'],
     }),
     PlayersModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
