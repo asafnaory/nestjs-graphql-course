@@ -1,6 +1,11 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreatePlayerInput, Player, UpdatePlayerInput } from 'src/graphql';
+import { Player } from 'src/graphql';
 import { PlayersService } from './players.service';
+import { UpdatePlayerInput } from './dto/update-player.input';
+import { CreatePlayerInput } from './dto/create-player.input';
+// import { UsePipes } from '@nestjs/common';
+// import { ZodValidationPipe } from './zod/zod-validation-pipe';
+// import { createPlayerInput } from './zod/create-player.input';
 
 @Resolver()
 export class PlayersResolver {
@@ -17,6 +22,7 @@ export class PlayersResolver {
   }
 
   @Mutation('createPlayer')
+  // @UsePipes(new ZodValidationPipe(createPlayerInput))
   async create(
     @Args('createPlayerInput') createPlayerInput: CreatePlayerInput,
   ): Promise<Player> {
