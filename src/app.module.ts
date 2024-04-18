@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { PlayersModule } from './players/players.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { PlayersTeamResolver } from './src/players/players-team.resolver';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { PrismaModule } from './prisma/prisma.module';
     PrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PlayersTeamResolver],
 })
 export class AppModule {}

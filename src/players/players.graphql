@@ -7,6 +7,14 @@ type Player {
     number: Int!
     name: String!
     nickNames: [String!]
+    team: Team!
+}
+
+type Team {
+    id: ID!
+    name: String!
+    city: String!
+    players: [Player!]
 }
 
 type Query {
@@ -20,14 +28,21 @@ type Mutation {
     deletePlayer(id: ID!): Player
 }
 
+input TeamInput {
+    name: String!
+    city: String!
+}
+
 input CreatePlayerInput {
     number: Int!
     name: String!
     nickNames: [String!]
+    team: TeamInput!
 }
 
 input UpdatePlayerInput {
     number: Int
     name: String
     nickNames: [String!]
+    team: TeamInput
 }

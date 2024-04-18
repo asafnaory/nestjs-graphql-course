@@ -1,4 +1,3 @@
-
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -8,16 +7,23 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class TeamInput {
+    name: string;
+    city: string;
+}
+
 export class CreatePlayerInput {
     number: number;
     name: string;
     nickNames?: Nullable<string[]>;
+    team: TeamInput;
 }
 
 export class UpdatePlayerInput {
     number?: Nullable<number>;
     name?: Nullable<string>;
     nickNames?: Nullable<string[]>;
+    team?: Nullable<TeamInput>;
 }
 
 export class Player {
@@ -25,6 +31,14 @@ export class Player {
     number: number;
     name: string;
     nickNames?: Nullable<string[]>;
+    team: Team;
+}
+
+export class Team {
+    id: string;
+    name: string;
+    city: string;
+    players?: Nullable<Player[]>;
 }
 
 export abstract class IQuery {

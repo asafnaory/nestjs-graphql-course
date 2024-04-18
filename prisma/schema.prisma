@@ -18,4 +18,13 @@ model Player {
   number    Int
   name      String
   nickNames String[] @default([])
+  teamId    String?
+  team      Team?    @relation(fields: [teamId], references: [id])
+}
+
+model Team {
+  id      String   @id @default(uuid())
+  name    String   @unique
+  city    String
+  players Player[]
 }
