@@ -1,13 +1,37 @@
 
+scalar Date 
+
+interface Athlete {
+    name: String!
+}
+
+enum Position {
+    POINT_GUARD
+    SHOOTING_GUARD
+    SMALL_FORWARD
+    POWER_FORWARD
+    CENTER
+}
+
+union AthleteResult = Player | Runner
+
 """
 Players Model
 """
-type Player {
+type Runner implements Athlete {
+    id: ID!
+    name: String!
+    createdAt: Date
+}
+
+type Player implements Athlete {
     id: ID!
     number: Int!
     name: String!
     nickNames: [String!]
     team: Team!
+    createdAt: Date
+    position: Position
 }
 
 type Team {
@@ -20,6 +44,7 @@ type Team {
 type Query {
     players: [Player!]!
     player(id: ID!): Player
+    athletes: [AthleteResult!]!
 }
 
 type Mutation {
@@ -38,6 +63,7 @@ input CreatePlayerInput {
     name: String!
     nickNames: [String!]
     team: TeamInput!
+    position: Position
 }
 
 input UpdatePlayerInput {
@@ -45,4 +71,5 @@ input UpdatePlayerInput {
     name: String
     nickNames: [String!]
     team: TeamInput
+    position: Position
 }

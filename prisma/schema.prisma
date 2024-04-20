@@ -20,6 +20,16 @@ model Player {
   nickNames String[] @default([])
   teamId    String?
   team      Team?    @relation(fields: [teamId], references: [id])
+  createdAt DateTime @default(now())
+  position  Position?
+}
+
+enum Position {
+  POINT_GUARD
+  SHOOTING_GUARD
+  SMALL_FORWARD
+  POWER_FORWARD
+  CENTER
 }
 
 model Team {
