@@ -45,6 +45,8 @@ type Query {
     players: [Player!]!
     player(id: ID!): Player
     athletes: [AthleteResult!]!
+    teams: [Team!]!
+    team(id: ID!): Team
 }
 
 type Mutation {

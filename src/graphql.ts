@@ -68,6 +68,8 @@ export abstract class IQuery {
     players: Player[];
     player?: Nullable<Player>;
     athletes: AthleteResult[];
+    teams: Team[];
+    team?: Nullable<Team>;
 }
 
 export abstract class IMutation {

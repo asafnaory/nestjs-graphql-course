@@ -7,6 +7,7 @@ import { PlayersModule } from './players/players.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { DateScalar } from './common/scalars/date.scalar';
 import { AthletesResolver } from './athletes/athletes.resolver';
+import { TeamsModule } from './teams/teams.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AthletesResolver } from './athletes/athletes.resolver';
     }),
     PlayersModule,
     PrismaModule,
+    TeamsModule,
   ],
   controllers: [AppController],
   providers: [AppService, DateScalar, AthletesResolver],
