@@ -4,10 +4,14 @@ import { CreatePlayerInput } from './dto/create-player.input';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Player, Team } from '@prisma/client';
 import { UpdatePlayerInput } from './dto/update-player.input';
+import { PubSub } from 'graphql-subscriptions';
 
 @Injectable()
 export class PlayersService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly pubSub: PubSub,
+  ) {}
 
   async findAll() {
     return await this.prismaService.player.findMany();
@@ -25,7 +29,7 @@ export class PlayersService {
 
   async create(createPlayerInput: CreatePlayerInput): Promise<Player> {
     const team = await this.preloadTeamByName(createPlayerInput.team);
-    return await this.prismaService.player.create({
+    const newPlayer = await this.prismaService.player.create({
       data: {
         ...createPlayerInput,
         team: {
@@ -33,6 +37,8 @@ export class PlayersService {
         },
       },
     });
+    this.pubSub.publish('playerAdded', { playerAdded: newPlayer });
+    return newPlayer;
   }
 
   async update(

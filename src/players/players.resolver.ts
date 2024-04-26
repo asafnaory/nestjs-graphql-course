@@ -1,12 +1,16 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PlayersService } from './players.service';
 import { UpdatePlayerInput } from './dto/update-player.input';
 import { CreatePlayerInput } from './dto/create-player.input';
 import * as GraphQLTypes from 'src/graphql';
+import { PubSub } from 'graphql-subscriptions';
 
 @Resolver()
 export class PlayersResolver {
-  constructor(private readonly playersService: PlayersService) {}
+  constructor(
+    private readonly playersService: PlayersService,
+    private readonly pubSub: PubSub,
+  ) {}
   @Query('players')
   async findAll() {
     return this.playersService.findAll();
@@ -36,5 +40,9 @@ export class PlayersResolver {
   @Mutation(() => GraphQLTypes.Player)
   async deletePlayer(@Args('id') id: string) {
     return this.playersService.remove(id);
+  }
+  @Subscription()
+  playerAdded() {
+    return this.pubSub.asyncIterator('playerAdded');
   }
 }

@@ -75,3 +75,7 @@ input UpdatePlayerInput {
     team: TeamInput
     position: Position
 }
+
+type Subscription {
+    playerAdded: Player!
+}

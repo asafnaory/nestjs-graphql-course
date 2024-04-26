@@ -78,5 +78,9 @@ export abstract class IMutation {
     deletePlayer?: Nullable<Player>;
 }
 
+export abstract class ISubscription {
+    playerAdded: Player;
+}
+
 export type AthleteResult = Player | Runner;
 type Nullable<T> = T | null;
