@@ -1,48 +1,50 @@
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { PlayersService } from './players.service';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+// import { PlayersService } from './players.service';
 import { UpdatePlayerInput } from './dto/update-player.input';
 import { CreatePlayerInput } from './dto/create-player.input';
-import * as GraphQLTypes from 'src/graphql';
-import { PubSub } from 'graphql-subscriptions';
+// import * as GraphQLTypes from 'src/graphql';
+// import { PubSub } from 'graphql-subscriptions';
+import { Player } from './entities/player';
+import { PrismaService } from 'src/prisma/prisma.service';
 
-@Resolver()
+@Resolver(() => Player)
 export class PlayersResolver {
-  constructor(
-    private readonly playersService: PlayersService,
-    private readonly pubSub: PubSub,
-  ) {}
-  @Query('players')
-  async findAll() {
-    return this.playersService.findAll();
-  }
+  constructor(private readonly prismaService: PrismaService) {}
 
-  @Query('player')
+  @Query(() => [Player], { name: 'players' })
+  async findAll() {
+    return this.prismaService.player.findMany();
+  }
+  @Query(() => Player, { name: 'player' })
   async findOne(@Args('id' /*, Some pipes */) id: string) {
     console.log(id);
-    return this.playersService.findOne(id);
+    return this.prismaService.player.findUnique({ where: { id } });
   }
 
-  @Mutation('createPlayer')
+  @Mutation(() => Player, { name: 'createPlayer' })
   async create(
     @Args('createPlayerInput') createPlayerInput: CreatePlayerInput,
   ) {
-    return this.playersService.create(createPlayerInput);
+    return this.prismaService.player.create({ data: createPlayerInput });
   }
 
-  @Mutation(() => GraphQLTypes.Player)
+  @Mutation(() => Player, { name: 'updatePlayer' })
   async updatePlayer(
     @Args('id') id: string,
     @Args('updatePlayerInput') updatePlayerInput: UpdatePlayerInput,
   ) {
-    return this.playersService.update(id, updatePlayerInput);
+    return this.prismaService.player.update({
+      where: { id },
+      data: updatePlayerInput,
+    });
   }
 
-  @Mutation(() => GraphQLTypes.Player)
+  @Mutation(() => Player, { name: 'deletePlayer' })
   async deletePlayer(@Args('id') id: string) {
-    return this.playersService.remove(id);
+    return this.prismaService.player.delete({ where: { id } });
   }
-  @Subscription()
-  playerAdded() {
-    return this.pubSub.asyncIterator('playerAdded');
-  }
+  // @Subscription()
+  // playerAdded() {
+  //   return this.pubSub.asyncIterator('playerAdded');
+  // }
 }

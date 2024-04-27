@@ -19,7 +19,7 @@ model Player {
   name      String
   nickNames String[] @default([])
   teamId    String?
-  team      Team?    @relation(fields: [teamId], references: [id])
+  // team      Team?    @relation(fields: [teamId], references: [id])
   createdAt DateTime @default(now())
   position  Position?
 }
@@ -32,9 +32,9 @@ enum Position {
   CENTER
 }
 
-model Team {
-  id      String   @id @default(uuid())
-  name    String   @unique
-  city    String
-  players Player[]
-}
+// model Team {
+//   id      String   @id @default(uuid())
+//   name    String   @unique
+//   city    String
+//   players Player[]
+// }

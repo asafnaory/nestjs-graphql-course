@@ -11,21 +11,21 @@ export class TeamsResolver {
     private readonly prismaService: PrismaService,
   ) {}
 
-  @Query('teams')
-  async getAllTeams(): Promise<Team[]> {
-    return this.prismaService.team.findMany({});
-  }
+  // @Query('teams')
+  // async getAllTeams(): Promise<Team[]> {
+  //   return this.prismaService.team.findMany({});
+  // }
 
-  @Query('team')
-  async findOne(@Args('id' /*, Some pipes */) id: string) {
-    console.log(id);
-    return this.prismaService.team.findFirst({ where: { id } });
-  }
+  // @Query('team')
+  // async findOne(@Args('id' /*, Some pipes */) id: string) {
+  //   console.log(id);
+  //   return this.prismaService.team.findFirst({ where: { id } });
+  // }
 
-  @ResolveField('players')
-  async getPlayersOfTeam(@Parent() team: Team): Promise<Player[]> {
-    return this.playersByTeamLoader.load(team.id);
-  }
+  // @ResolveField('players')
+  // async getPlayersOfTeam(@Parent() team: Team): Promise<Player[]> {
+  //   return this.playersByTeamLoader.load(team.id);
+  // }
 
   // N + 1 Problem:
 

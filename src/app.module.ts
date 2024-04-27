@@ -9,18 +9,20 @@ import { DateScalar } from './common/scalars/date.scalar';
 import { AthletesResolver } from './athletes/athletes.resolver';
 import { TeamsModule } from './teams/teams.module';
 import { PubSubModule } from './pub-sub/pub-sub.module';
+import { join } from 'path';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloDriver,
-      typePaths: ['./**/*.graphql'],
-      installSubscriptionHandlers: true,
+      // typePaths: ['./**/*.graphql'],
+      // installSubscriptionHandlers: true,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     PlayersModule,
     PrismaModule,
-    TeamsModule,
-    PubSubModule,
+    // TeamsModule,
+    // PubSubModule,
   ],
   controllers: [AppController],
   providers: [AppService, DateScalar, AthletesResolver],

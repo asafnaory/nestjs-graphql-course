@@ -1,0 +1,36 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Player {
+  id: ID!
+  number: Int!
+  name: String!
+  nickNames: [String!]!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Query {
+  players: [Player!]!
+  player(id: String!): Player!
+}
+
+type Mutation {
+  createPlayer(createPlayerInput: CreatePlayerInput!): Player!
+  updatePlayer(id: String!, updatePlayerInput: UpdatePlayerInput!): Player!
+  deletePlayer(id: String!): Player!
+}
+
+input CreatePlayerInput {
+  number: Float!
+  name: String!
+  nickNames: [String!]
+}
+
+input UpdatePlayerInput {
+  number: Float!
+  name: String!
+  nickNames: [String!]
+}

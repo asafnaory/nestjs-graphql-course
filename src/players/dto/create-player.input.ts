@@ -1,15 +1,16 @@
+import { InputType } from '@nestjs/graphql';
 import { IsArray, IsNumber, IsString, MinLength } from 'class-validator';
-import * as GraphQLTypes from '../../graphql';
 
-export class CreatePlayerInput extends GraphQLTypes.CreatePlayerInput {
+@InputType()
+export class CreatePlayerInput {
   @IsNumber()
-  override number: number;
+  number: number;
 
   @IsString()
   @MinLength(3)
-  override name: string;
+  name: string;
 
   @IsArray()
   @IsString({ each: true })
-  override nickNames?: string[];
+  nickNames?: string[];
 }
