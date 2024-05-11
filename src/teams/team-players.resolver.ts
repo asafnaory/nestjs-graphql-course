@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { Team } from '@prisma/client';
-import { TeamService } from './team.service';
+import { TeamService } from './teams.service';
 
 @Resolver('Team')
 export class TeamPlayersResolver {

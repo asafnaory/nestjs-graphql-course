@@ -5,7 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { PlayersModule } from './players/players.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { TeamModule } from './team/team.module';
+import { TeamModule } from './teams/teams.module';
 
 @Module({
   imports: [
