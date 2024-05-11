@@ -92,11 +92,11 @@ export class PlayersService {
     }
     return this.prismaService.team.create({ data: teamInfo });
   }
-
   async getTeamOfPlayer(teamId: string): Promise<Team> {
     return this.prismaService.team.findUnique({
       where: { id: teamId },
-      include: { players: true },
+      // Bad practice:
+      // include: { players: true },
     });
   }
 }
